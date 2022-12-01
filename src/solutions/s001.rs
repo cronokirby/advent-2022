@@ -21,11 +21,11 @@ impl Input {
     }
 }
 
-fn solve_A(input: &Input) -> Result<u64, Box<dyn Error>> {
+fn solve_a(input: &Input) -> Result<u64, Box<dyn Error>> {
     input.calories.iter().map(|v| v.iter().sum()).max().ok_or_else(|| "empty calories".into())
 }
 
-fn solve_B(input: &Input) -> u64 {
+fn solve_b(input: &Input) -> u64 {
     let mut sums: Vec<u64> = input.calories.iter().map(|v| v.iter().sum()).collect();
     sums.sort();
     sums.reverse();
@@ -37,8 +37,8 @@ struct Solution001;
 impl Solution for Solution001 {
     fn answer(&self, data: &str) -> Result<(String, String), Box<dyn Error>> {
         let input = Input::parse(data);
-        let a = solve_A(&input)?;
-        let b = solve_B(&input);
+        let a = solve_a(&input)?;
+        let b = solve_b(&input);
         Ok((format!("{}", a), format!("{}", b)))
     }
 }
