@@ -1,4 +1,4 @@
-use std::{error::Error, collections::HashSet};
+use std::{collections::HashSet, error::Error};
 
 use crate::advent::Solution;
 
@@ -17,7 +17,7 @@ fn parse_priority(c: char) -> Result<Priority, Box<dyn Error>> {
 #[derive(Debug)]
 struct Arrangement {
     left: Vec<Priority>,
-    right: Vec<Priority>
+    right: Vec<Priority>,
 }
 
 impl Arrangement {
@@ -37,6 +37,10 @@ impl Arrangement {
             }
         }
         Ok(Arrangement { left, right })
+    }
+
+    fn element_set(&self) -> HashSet<Priority> {
+        self.left.iter().chain(self.right.iter()).copied().collect()
     }
 }
 
@@ -68,7 +72,17 @@ fn solve_a(input: &Input) -> u64 {
 }
 
 fn solve_b(input: &Input) -> u64 {
-    0
+    input
+        .0
+        .chunks(3)
+        .map(|chunk| {
+            let mut acc = chunk[0].element_set();
+            for next in &chunk[1..] {
+                acc = acc.intersection(&next.element_set()).copied().collect();
+            }
+            u64::from(acc.into_iter().next().unwrap())
+        })
+        .sum()
 }
 
 struct Solution003;
