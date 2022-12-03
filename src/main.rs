@@ -81,11 +81,10 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
         Opt::Test { day: Some(day) } => {
-            let day = day - 1;
-            if day >= solutions.len() {
+            if day > solutions.len() {
                 println!("Day {} not implemented!", day);
             } else {
-                test(&*solutions[day], day)?;
+                test(&*solutions[day - 1], day)?;
             }
         }
         Opt::Answer { day: None } => {
@@ -94,11 +93,11 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
         Opt::Answer { day: Some(day) } => {
-            let day = day - 1;
-            if day >= solutions.len() {
+            let day = day;
+            if day > solutions.len() {
                 println!("Day {} not implemented!", day);
             } else {
-                answer(&*solutions[day], day)?;
+                answer(&*solutions[day - 1], day)?;
             }
         }
     }
